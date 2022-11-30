@@ -54,8 +54,7 @@ public class MainActivityx extends AppCompatActivity {
                 int cc = Integer.parseInt(c);
                 Log.d("ddit aa",aa+"");
 
-                StringBuffer guessT = new StringBuffer();
-                guessT.append(a).append(b).append(c);
+                String guessT=a+b+c;
 
                 if(answer1==aa) strikeCount++;
                 if(answer2==bb) strikeCount++;
@@ -69,13 +68,14 @@ public class MainActivityx extends AppCompatActivity {
                 if(answer3==bb) ballCount++;
                 Log.d("ddit ballCount ",ballCount+"");
 
-                if(guessT.toString().equals(answer)){
+                if(guessT.equals(answer)){
                     result = "정답";
-                      Toast.makeText(getApplicationContext(), "정답!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "정답!", Toast.LENGTH_LONG).show();
+
                 } else {
                     result = strikeCount +"S "+ballCount+"B";
                 }
-                str.append(a).append(b).append(c).append("\t\t\t\t\t\t\t\t\t\t\t\t"+result).append("\n");
+                str.append(guessT + "\t\t\t\t\t\t\t" + result + "\n");
                 tv_disp.setText(str);
                 et_dan.setText("");
             }
