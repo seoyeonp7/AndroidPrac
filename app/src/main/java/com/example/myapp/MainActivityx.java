@@ -14,71 +14,90 @@ import java.util.Random;
 
 public class MainActivityx extends AppCompatActivity {
 
+    String com;
+    EditText et;
     TextView tv_disp;
-    EditText et_dan;
-    int answer1,answer2,answer3;
-    String answer;
-    StringBuffer str;
-    String result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainx);
-        et_dan = findViewById(R.id.et_dan);
-        tv_disp = findViewById(R.id.tv_disp);
-        Random random = new Random();
-        answer1 = random.nextInt(9)+1;
-        answer2 = random.nextInt(9)+1;
-        answer3 = random.nextInt(9)+1;
-        answer = ""+answer1+answer2+answer3;
-        Log.d("ddit",answer);
-        str = new StringBuffer();
-        myClick();
-    }
 
-    private void myClick() {
+        et = findViewById(R.id.et);
+        tv_disp = findViewById(R.id.tv_disp);
 
         Button btn = findViewById(R.id.btn);
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int strikeCount=0;
-                int ballCount=0;
-                String guess = et_dan.getText().toString();
-                String a = guess.substring(0,1);
-                String b = guess.substring(1,2);
-                String c = guess.substring(2,3);
-                int aa = Integer.parseInt(a);
-                int bb = Integer.parseInt(b);
-                int cc = Integer.parseInt(c);
-                Log.d("ddit aa",aa+"");
-
-                String guessT=a+b+c;
-
-                if(answer1==aa) strikeCount++;
-                if(answer2==bb) strikeCount++;
-                if(answer3==cc) strikeCount++;
-                Log.d("ddit scrikeCount ",strikeCount+"");
-                if(answer1==bb) ballCount++;
-                if(answer1==cc) ballCount++;
-                if(answer2==aa) ballCount++;
-                if(answer2==cc) ballCount++;
-                if(answer3==aa) ballCount++;
-                if(answer3==bb) ballCount++;
-                Log.d("ddit ballCount ",ballCount+"");
-
-                if(guessT.equals(answer)){
-                    result = "정답";
-                    Toast.makeText(getApplicationContext(), "정답!", Toast.LENGTH_LONG).show();
-
-                } else {
-                    result = strikeCount +"S "+ballCount+"B";
-                }
-                str.append(guessT + "\t\t\t\t\t\t\t" + result + "\n");
-                tv_disp.setText(str);
-                et_dan.setText("");
+                myclick();
             }
         });
+        setComRandom();
+    }
+
+    public void setComRandom() {
+        int[] arr9 = {1,2,3,4,5,6,7,8,9};
+        for(int i=0; i<1000; i++){
+            int rnd = (int) (Math.random()*9);
+            int a = arr9[0];
+            int b = arr9[rnd];
+            arr9[0]=b;
+            arr9[rnd]=a;
+        }
+        com = arr9[0]+""+arr9[1]+arr9[2];
+        Log.d("ddit",com);
+    }
+
+    public void myclick(){
+        String mine = et.getText().toString();
+        int s = getStrike(mine,com);
+        int b = getBall(mine,com);
+        Log.d("ddit", s+","+b);
+
+        String str_old = tv_disp.getText().toString();
+        String str_new = mine+"  "+s+"S"+b+"B\n";
+
+        tv_disp.setText(str_old+str_new);
+        et.setText("");
+
+        if (s == 3) {
+            Toast.makeText(getApplicationContext(), mine+"을 맞췄습니다.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public int getBall(String mine, String com){
+        int ret = 0;
+        String m1 = mine.substring(0,1);
+        String m2 = mine.substring(1,2);
+        String m3 = mine.substring(2,3);
+
+        String c1 = com.substring(0,1);
+        String c2 = com.substring(1,2);
+        String c3 = com.substring(2,3);
+
+        if(c1.equals(m2)||c1.equals(m3)) ret++;
+        if(c2.equals(m1)||c1.equals(m3)) ret++;
+        if(c3.equals(m1)||c1.equals(m2)) ret++;
+
+        return ret;
+    }
+
+    public int getStrike(String mine, String com){
+        int ret = 0;
+        String m1 = mine.substring(0,1);
+        String m2 = mine.substring(1,2);
+        String m3 = mine.substring(2,3);
+
+        String c1 = com.substring(0,1);
+        String c2 = com.substring(1,2);
+        String c3 = com.substring(2,3);
+
+        if(c1.equals(m1)) ret++;
+        if(c2.equals(m2)) ret++;
+        if(c3.equals(m3)) ret++;
+
+        return ret;
     }
 }

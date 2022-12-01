@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,10 +22,6 @@ public class MainActivity9 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main9);
         tv_disp = findViewById(R.id.tv_disp);
-        myClick();
-    }
-
-    private void myClick() {
 
         Button btn1 = findViewById(R.id.btn1);
         Button btn2 = findViewById(R.id.btn2);
@@ -38,85 +35,30 @@ public class MainActivity9 extends AppCompatActivity {
         Button btn0 = findViewById(R.id.btn0);
         Button btnCall = findViewById(R.id.btnCall);
 
-        StringBuffer str = new StringBuffer();
+        btn1.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { myclick(view); }});
+        btn2.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { myclick(view); }});
+        btn3.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { myclick(view); }});
+        btn4.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { myclick(view); }});
+        btn5.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { myclick(view); }});
+        btn6.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { myclick(view); }});
+        btn7.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { myclick(view); }});
+        btn8.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { myclick(view); }});
+        btn9.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { myclick(view); }});
+        btn0.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { myclick(view); }});
+        btnCall.setOnClickListener(new View.OnClickListener() { public void onClick(View view) { myCall(view); }});
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                str.append("1");
-                tv_disp.setText(str);
-            }
-        });
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                str.append("2");
-                tv_disp.setText(str);
-            }
-        });
-        btn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                str.append("3");
-                tv_disp.setText(str);
-            }
-        });
-        btn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                str.append("4");
-                tv_disp.setText(str);
-            }
-        });
-        btn5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                str.append("5");
-                tv_disp.setText(str);
-            }
-        });
-        btn6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                str.append("6");
-                tv_disp.setText(str);
-            }
-        });
-        btn7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                str.append("7");
-                tv_disp.setText(str);
-            }
-        });
-        btn8.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                str.append("8");
-                tv_disp.setText(str);
-            }
-        });
-        btn9.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                str.append("9");
-                tv_disp.setText(str);
-            }
-        });
-        btn0.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                str.append("0");
-                tv_disp.setText(str);
-            }
-        });
-        btnCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String bb = "calling " +str;
-                tv_disp.setText(bb);
-                str.setLength(0);
-            }
-        });
+    }
+
+    public void myclick(View view) {
+        Button obj = (Button) view;
+        Log.d("ddit", obj.getText().toString());
+        String str_old = tv_disp.getText().toString();
+        String str_new = obj.getText().toString();
+        tv_disp.setText(str_old+str_new);
+    }
+
+    public void myCall(View view) {
+        String str_tel = tv_disp.getText().toString();
+        Toast.makeText(getApplicationContext(), "calling\n"+str_tel, Toast.LENGTH_SHORT).show();
     }
 }
